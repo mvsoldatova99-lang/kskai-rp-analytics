@@ -1,0 +1,1701 @@
+<!doctype html>
+<html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>К-Скай — исследование укомплектования команды РП</title>
+<meta name="description" content="Доход и рынок, результат подбора, закрепление РП и экономика замены на 12 месяцев.">
+<style>:root {
+  font-family: Inter, Arial, Helvetica, sans-serif;
+  color: #19232e;
+  background: #f5f7f8;
+  font-synthesis: none;
+}
+* { box-sizing: border-box; }
+body { margin: 0; }
+button, input { font: inherit; }
+button { cursor: pointer; }
+a { color: #315977; text-underline-offset: 3px; }
+.topbar {
+  min-height: 70px;
+  padding: 14px clamp(20px, 3vw, 42px);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+  border-bottom: 1px solid #e1e5e8;
+  background: #fff;
+}
+.brand { display: flex; align-items: center; gap: 18px; white-space: nowrap; }
+.brand strong { color: #315977; font-size: 14px; letter-spacing: .09em; }
+.brand span { color: #677481; font-size: 13px; }
+.site-nav { display: flex; align-items: center; gap: 4px; padding: 4px; border: 1px solid #e1e6e9; border-radius: 10px; background: #f7f9fa; }
+.site-nav a { padding: 8px 12px; border-radius: 7px; color: #526572; font-size: 13px; font-weight: 650; text-decoration: none; white-space: nowrap; }
+.site-nav a:hover { background: #eaf0f3; }
+.site-nav a[aria-current="page"] { background: #315977; color: #fff; box-shadow: 0 1px 4px rgba(31,46,59,.12); }
+.site-nav a[aria-current="page"]:hover { background: #284b66; }
+.top-actions { display: flex; gap: 8px; flex-wrap: wrap; }
+.top-actions button {
+  min-height: 38px;
+  padding: 8px 13px;
+  border-radius: 8px;
+  border: 1px solid #d7dde1;
+  font-size: 13px;
+  font-weight: 600;
+}
+.ghost { color: #263440; background: #fff; }
+.ghost:hover { background: #f3f5f6; }
+.dark { color: #fff; background: #315977; border-color: #315977 !important; }
+.dark:hover { background: #284b66; }
+main { max-width: 1520px; margin: auto; padding: 34px clamp(20px, 3vw, 42px) 58px; }
+.page-head { display: flex; justify-content: space-between; align-items: flex-end; gap: 20px; margin-bottom: 28px; }
+.eyebrow { margin: 0 0 9px; color: #657684; font-size: 11px; font-weight: 700; letter-spacing: .11em; text-transform: uppercase; }
+h1 { margin: 0; font-size: clamp(28px, 3vw, 39px); letter-spacing: -.035em; line-height: 1.15; }
+.lede { max-width: 730px; margin: 12px 0 0; color: #5c6b77; font-size: 15px; line-height: 1.5; }
+.source-chip { flex: none; border: 1px solid #dfe5e8; background: #fff; border-radius: 999px; padding: 9px 13px; font-size: 12px; color: #5c6b77; }
+.workspace { display: grid; grid-template-columns: minmax(318px, 390px) minmax(0, 1fr); align-items: start; gap: 22px; }
+.panel { background: #fff; border: 1px solid #e0e5e8; border-radius: 13px; box-shadow: 0 3px 15px rgba(31,46,59,.025); }
+.inputs { overflow: hidden; }
+.panel-top { padding: 24px 23px 19px; border-bottom: 1px solid #edf0f1; }
+.panel-top h2, .result-header h2, .section-title h2, .notes-panel h2 { margin: 0; font-size: 21px; letter-spacing: -.025em; }
+.panel-top p { margin: 8px 0 0; color: #66747f; font-size: 12px; line-height: 1.5; }
+.input-section { padding: 23px 23px 22px; border-bottom: 1px solid #edf0f1; }
+.section-heading { display: flex; align-items: center; gap: 10px; margin-bottom: 19px; }
+.section-heading span { font-size: 11px; font-weight: 400; color: #7691a5; }
+.section-heading h3 { margin: 0; font-size: 13px; letter-spacing: .075em; text-transform: uppercase; }
+.field { margin: 0 0 17px; min-width: 0; }
+.field:last-child { margin-bottom: 0; }
+.field label { display: block; margin-bottom: 7px; font-size: 12px; font-weight: 650; line-height: 1.35; }
+.field input {
+  width: 100%;
+  height: 42px;
+  padding: 8px 11px;
+  border: 1px solid #ced6db;
+  border-radius: 8px;
+  background: #fff;
+  color: #17232e;
+  font-size: 15px;
+  font-weight: 400;
+  font-variant-numeric: tabular-nums;
+}
+.field input:focus { outline: 3px solid #d8e9f4; border-color: #5588a9; }
+.field small, .section-note { display: block; margin-top: 6px; color: #77848d; font-size: 11px; line-height: 1.45; }
+.explain-box { margin: 2px 0 17px; padding: 12px 13px; border: 1px solid #dce8ee; border-radius: 8px; background: #f5fafc; color: #526b7a; font-size: 11px; line-height: 1.55; }
+.explain-box strong { color: #28485c; }
+.field-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+.field-grid .field { margin-bottom: 17px; }
+.key-field input { border-color: #c49d51; background: #fffaf0; }
+.section-note { margin-top: -1px; }
+.reference-note { margin: 0; padding: 17px 23px; border-bottom: 1px solid #edf0f1; background: #f8fafb; color: #61717c; font-size: 12px; font-weight: 400; line-height: 1.5; }
+.advanced { border-bottom: 1px solid #edf0f1; }
+.advanced summary { list-style: none; padding: 19px 23px; font-size: 13px; font-weight: 400; cursor: pointer; display: flex; justify-content: space-between; align-items: center; gap: 8px; }
+.advanced summary::-webkit-details-marker { display: none; }
+.advanced summary::after { content: "＋"; color: #748694; font-size: 19px; font-weight: 400; }
+.advanced[open] summary::after { content: "−"; }
+.advanced summary span { margin-left: auto; color: #8a96a0; font-size: 11px; font-weight: 400; }
+.details-body { padding: 3px 23px 23px; }
+.advanced .field label, .advanced .field input, .advanced .microheading { font-weight: 400; }
+.muted { margin: 0 0 18px; color: #77848d; font-size: 11px; line-height: 1.5; }
+.microheading { margin: 7px 0 13px; color: #596a78; font-size: 11px; font-weight: 750; letter-spacing: .04em; text-transform: uppercase; }
+.results { min-width: 0; display: grid; gap: 22px; }
+.result-panel { overflow: hidden; }
+.result-header { display: flex; justify-content: space-between; align-items: start; gap: 15px; padding: 26px 27px 16px; }
+.status-tag { display: inline-block; flex: none; background: #fff3da; color: #865c10; padding: 7px 10px; border-radius: 999px; font-size: 11px; font-weight: 700; }
+.alert { margin: 0 27px 22px; padding: 13px 15px; border: 1px solid #ecd9ad; border-radius: 9px; background: #fff9ec; color: #75551e; font-size: 12px; line-height: 1.45; }
+.alert.complete { border-color: #d9e5da; background: #f6faf6; color: #4f6654; }
+.kpi-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.kpi { min-height: 143px; padding: 21px 27px; border-top: 1px solid #edf0f1; }
+.kpi:nth-child(odd) { border-right: 1px solid #edf0f1; }
+.kpi p { margin: 0 0 13px; font-size: 12px; color: #5e6c78; }
+.kpi strong { display: block; margin-bottom: 9px; font-size: clamp(24px, 2.6vw, 34px); font-weight: 400; line-height: 1.05; letter-spacing: -.04em; font-variant-numeric: tabular-nums; }
+.kpi:first-child strong { color: #315977; }
+.kpi span { display: block; color: #8a959d; font-size: 11px; line-height: 1.4; }
+.cost-details { margin-top: 18px; border-top: 1px solid #e8edef; }
+.cost-details > summary { display: flex; align-items: center; gap: 9px; padding: 13px 0; list-style: none; cursor: pointer; color: #526b7a; font-size: 11px; font-weight: 400; line-height: 1.4; }
+.cost-details > summary::-webkit-details-marker { display: none; }
+.cost-details > summary::after { content: "＋"; margin-left: auto; color: #748694; font-size: 16px; line-height: 1; }
+.cost-details[open] > summary::after { content: "−"; }
+.cost-details > summary span { color: #5d6d79; font-size: 11px; font-weight: 400; }
+.cost-lines { margin: 18px 0 0; padding: 11px 0 0; border-top: 1px solid #e8edef; }
+.cost-lines div { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 12px; align-items: start; padding: 7px 0; }
+.cost-lines dt, .cost-lines dd { margin: 0; color: #5d6d79; font-size: 11px; font-weight: 400; line-height: 1.4; }
+.cost-lines dd { color: #263744; white-space: nowrap; font-variant-numeric: tabular-nums; }
+.cost-details .cost-lines { margin: 0; padding: 0 0 7px 9px; border-top: 0; border-left: 2px solid #dfe8ec; }
+.cost-lines-rest { margin: 0; padding-top: 0; border-top: 0; }
+.kpi.emphasized { background: #f9fbfc; }
+.pay-summary { margin: 0; border-top: 1px solid #edf0f1; padding: 14px 27px; color: #5d6d79; font-size: 12px; line-height: 1.55; }
+.chart-panel { padding: 25px 27px; }
+.section-title { display: flex; justify-content: space-between; align-items: end; gap: 15px; margin-bottom: 20px; }
+.section-title > span { color: #7d8992; font-size: 11px; }
+.breakdown { display: grid; }
+.breakdown > div { display: flex; justify-content: space-between; gap: 20px; padding: 11px 0; border-bottom: 1px solid #eef1f2; font-size: 13px; }
+.breakdown > div span { color: #566672; }
+.breakdown > div b { white-space: nowrap; font-variant-numeric: tabular-nums; }
+.method-note { margin: 17px 0 0; color: #72808a; font-size: 11px; line-height: 1.5; }
+.chart { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: 5px; height: 145px; align-items: end; padding: 8px 0 19px; border-bottom: 1px solid #e3e8ea; }
+.chart-column { min-width: 0; display: flex; flex-direction: column; justify-content: flex-end; align-items: center; height: 100%; gap: 5px; }
+.chart-bar-wrap { width: min(100%, 34px); flex: 1; display: flex; align-items: end; border-radius: 5px 5px 0 0; background: #f2f5f6; }
+.chart-bar { width: 100%; min-height: 2px; border-radius: 5px 5px 0 0; background: #5f8199; transition: height .18s ease; }
+.chart-column strong { color: #6f7d87; font-size: 10px; font-weight: 400; }
+.chart-column span { color: #8d99a1; font-size: 10px; }
+.table-scroll { overflow-x: auto; margin-top: 19px; }
+table { border-collapse: collapse; width: 100%; min-width: 720px; font-size: 12px; }
+th { color: #75838e; font-weight: 650; text-align: right; padding: 10px 9px; border-bottom: 1px solid #dfe6e9; line-height: 1.3; }
+th:first-child, td:first-child { text-align: left; }
+td { text-align: right; padding: 10px 9px; border-bottom: 1px solid #edf0f1; font-variant-numeric: tabular-nums; }
+tbody tr:hover { background: #f8fafb; }
+.notes-panel ul { padding-left: 18px; margin: 15px 0 0; color: #657580; font-size: 12px; line-height: 1.6; }
+.notes-panel li + li { margin-top: 8px; }
+@media (max-width: 980px) {
+  .topbar { flex-wrap: wrap; }
+  .site-nav { width: 100%; }
+  .site-nav a { flex: 1; text-align: center; }
+  .top-actions { order: 2; }
+  .workspace { grid-template-columns: 1fr; }
+  .inputs { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .panel-top { grid-column: 1 / -1; }
+  .advanced { grid-column: 1 / -1; }
+}
+@media (max-width: 640px) {
+  .topbar { align-items: flex-start; flex-direction: column; }
+  .brand { gap: 10px; }
+  .top-actions { width: 100%; }
+  .top-actions button { flex: 1; min-width: max-content; }
+  .site-nav a { padding: 8px 7px; font-size: 12px; white-space: normal; }
+  main { padding-top: 25px; }
+  .page-head { align-items: flex-start; flex-direction: column; }
+  .source-chip { align-self: flex-start; }
+  .inputs { display: block; }
+  .kpi-grid { grid-template-columns: 1fr; }
+  .kpi:nth-child(odd) { border-right: 0; }
+  .kpi { min-height: 120px; }
+  .result-header, .chart-panel { padding: 21px; }
+  .alert { margin-left: 21px; margin-right: 21px; }
+  .kpi { padding: 19px 21px; }
+  .pay-summary { padding: 13px 21px; }
+}
+@media print {
+  :root { background: #fff; }
+  .top-actions, .inputs, .source-chip, .site-nav { display: none !important; }
+  main { max-width: 100%; padding: 16px; }
+  .workspace { display: block; }
+  .results { gap: 12px; }
+  .panel { box-shadow: none; break-inside: avoid; }
+  .notes-panel { break-inside: auto; }
+  .alert { display: none; }
+}
+
+:root {
+  --stats-blue: #315977;
+  --stats-teal: #4a7883;
+  --stats-green: #427b5b;
+  --stats-coral: #a65b63;
+  --stats-amber: #9b6a36;
+  --stats-ink: #19232e;
+}
+.stats-main { max-width: 1520px; }
+.stats-section { margin-top: 42px; }
+.stats-section-head { display: flex; align-items: end; justify-content: space-between; gap: 20px; margin-bottom: 18px; }
+.stats-section-head h2 { margin: 0; color: var(--stats-ink); font-size: clamp(21px, 2.2vw, 25px); line-height: 1.2; letter-spacing: -.025em; }
+.stats-date { color: #74818b; font-size: 12px; white-space: nowrap; }
+.stats-kpi-grid { display: grid; grid-template-columns: repeat(4, minmax(0,1fr)); gap: 12px; margin-bottom: 16px; }
+.stats-kpi { min-height: 139px; padding: 20px 22px; border: 1px solid #e0e5e8; border-radius: 12px; background: #fff; }
+.stats-kpi.stage-trigger, .stats-kpi.attrition-trigger { display: block; width: 100%; color: inherit; text-align: left; cursor: pointer; }
+.stats-kpi.stage-trigger:hover, .stats-kpi.stage-trigger.is-selected, .stats-kpi.attrition-trigger:hover, .stats-kpi.attrition-trigger.is-selected { border-color: #9db7c6; box-shadow: 0 4px 14px rgba(30,80,110,.09); }
+.stats-kpi span, .stats-kpi small { display: block; font-size: 12px; line-height: 1.4; }
+.stats-kpi span { color: #5e6c78; font-weight: 600; }
+.stats-kpi strong { display: block; margin: 12px 0 9px; color: var(--tile-color); font-size: 40px; line-height: 1; letter-spacing: -.05em; font-variant-numeric: tabular-nums; }
+.stats-kpi small { color: #84919a; font-size: 11px; }
+.kpi-blue, .kpi-teal { --tile-color: var(--stats-blue); }
+.kpi-green { --tile-color: var(--stats-green); }
+.kpi-coral { --tile-color: var(--stats-coral); }
+.kpi-amber { --tile-color: var(--stats-amber); }
+.stats-card { margin-top: 16px; padding: 25px 27px; }
+.stats-card-head { display: flex; justify-content: space-between; align-items: baseline; gap: 14px; margin-bottom: 18px; }
+.stats-card-head h3 { margin: 0; color: var(--stats-ink); font-size: 20px; letter-spacing: -.025em; }
+.stats-card-head > span { color: #607986; font-size: 11px; }
+.stats-caption { margin: 16px 0 0; color: #607986; font-size: 12px; line-height: 1.55; }
+.table-scroll.stats-table-scroll { margin-top: 0; overflow-x: auto; }
+.funnel-table { width: 100%; min-width: 690px; border-collapse: separate; border-spacing: 0; font-size: 13px; }
+.funnel-table thead th { padding: 12px 15px; border-bottom: 1px solid #dfe6e9; background: #f7f9fa; color: #75838e; text-align: left; }
+.funnel-table thead th:first-child { border-radius: 9px 0 0 0; }
+.funnel-table thead th:last-child { border-radius: 0 9px 0 0; }
+.funnel-table tbody th, .funnel-table tbody td { padding: 11px 15px; border-bottom: 1px solid #edf0f1; text-align: left; }
+.funnel-table tbody th { color: #364e5d; font-weight: 600; }
+.funnel-table tbody tr:hover { background: #f8fafb; }
+.funnel-table tbody tr.critical-row { background: #fcfaf6; }
+.funnel-table tbody tr.critical-row th { color: #795a32; }
+.funnel-table tbody tr.last-row .table-count { color: var(--stats-green); }
+.stage-number { display: inline-grid; place-items: center; width: 28px; height: 28px; margin-right: 10px; border-radius: 7px; background: #edf2f5; color: var(--stats-blue); font-size: 11px; font-weight: 750; }
+.table-count { border: 0; padding: 2px 0; background: transparent; color: var(--stats-blue); font: inherit; font-size: 16px; font-weight: 750; text-decoration: underline; text-decoration-color: #9ac7df; text-underline-offset: 4px; cursor: pointer; }
+.table-count:hover, .table-count.is-selected { color: #0b4b78; text-decoration-color: currentColor; }
+.rate-pill { display: inline-block; min-width: 62px; font-size: 12px; font-weight: 600; text-align: center; }
+.rate-amber { color: var(--stats-amber); font-weight: 750; }
+.rate-green { color: var(--stats-green); }
+.funnel-insight { display: grid; grid-template-columns: auto minmax(0,1fr) auto; gap: 12px 16px; align-items: center; margin-top: 18px; padding: 14px 0 0; border-top: 1px solid #e8edef; color: #61727d; font-size: 12px; }
+.funnel-insight > span { color: var(--stats-amber); font-size: 10px; font-weight: 750; text-transform: uppercase; letter-spacing: .06em; white-space: nowrap; }
+.funnel-insight strong { font-weight: 650; }
+.inline-stage-trigger { border: 0; padding: 0; background: transparent; color: var(--stats-amber); font: inherit; font-weight: 650; text-decoration: underline; text-underline-offset: 3px; cursor: pointer; white-space: nowrap; }
+.inline-stage-trigger:hover, .inline-stage-trigger.is-selected { color: #6a4a28; }
+.candidates-panel { margin-top: 16px; padding: 25px 27px; }
+.candidates-panel[hidden] { display: none; }
+.candidates-panel-head { display: flex; align-items: start; justify-content: space-between; gap: 18px; margin-bottom: 19px; }
+.candidates-panel-head h3 { margin: 0; color: var(--stats-ink); font-size: 21px; letter-spacing: -.025em; }
+.candidates-panel-head button { min-height: 36px; padding: 7px 11px; border: 1px solid #d7dde1; border-radius: 8px; font-size: 12px; font-weight: 650; }
+.candidate-count { margin: 7px 0 0; color: #587481; font-size: 12px; }
+.candidate-search-label { display: block; margin-bottom: 7px; color: #3e606f; font-size: 12px; font-weight: 650; }
+.candidate-search { width: 100%; max-width: 400px; height: 40px; padding: 8px 11px; border: 1px solid #bbd3dc; border-radius: 8px; background: #fff; color: #1b2c37; font: inherit; font-size: 13px; }
+.candidate-search:focus, .stage-trigger:focus-visible, .attrition-trigger:focus-visible { outline: 3px solid #a6dcef; outline-offset: 2px; }
+.candidate-list-scroll { max-height: 355px; overflow-y: auto; margin-top: 15px; border: 1px solid #dce9ed; border-radius: 9px; }
+.candidate-list { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); margin: 0; padding: 4px 14px; list-style: none; }
+.candidate-list li { min-width: 0; padding: 11px 12px; border-bottom: 1px solid #edf1f3; }
+.candidate-list strong { display: block; color: #254355; font-size: 13px; font-weight: 650; line-height: 1.35; }
+.candidate-list small { display: block; margin-top: 3px; color: #6e8894; font-size: 11px; line-height: 1.3; }
+.candidate-empty { grid-column: 1 / -1; color: #7a8b96; font-size: 13px; }
+.attrition-table { width: 100%; min-width: 690px; font-size: 12px; }
+.attrition-table th, .attrition-table td { padding: 12px 10px; text-align: center; }
+.attrition-table th:first-child { text-align: left; }
+.attrition-table thead th { border-bottom: 1px solid #dfe6e9; background: #f7f9fa; color: #667985; }
+.attrition-table tbody th { color: #364e5d; font-size: 14px; font-weight: 700; }
+.attrition-table tbody tr:nth-child(even) { background: #f9fcfd; }
+.attrition-table tfoot th, .attrition-table tfoot td { border-top: 1px solid #d8e2e6; background: #f5f8f9; color: #334b5a; font-weight: 700; }
+.attrition-table .table-count { font-size: 17px; }
+.cohort-share { margin-top: 27px; padding-top: 24px; border-top: 1px solid #e8edef; }
+.share-row { display: grid; grid-template-columns: 66px minmax(0,1fr); align-items: center; gap: 14px; margin-top: 13px; }
+.share-label strong, .share-label small { display: block; }
+.share-label strong { color: #21495c; font-size: 15px; }
+.share-label small { margin-top: 2px; color: #6f8793; font-size: 11px; }
+.share-track { display: flex; width: 100%; height: 38px; overflow: hidden; border-radius: 8px; background: #eef2f4; }
+.share-segment { display: flex; align-items: center; justify-content: center; min-width: 0; height: 100%; color: #fff; font-size: 12px; font-weight: 750; font-variant-numeric: tabular-nums; }
+.share-segment + .share-segment { border-left: 2px solid #fff; }
+.share-active, .legend-active { background: var(--stats-green); }
+.share-failed, .legend-failed { background: var(--stats-coral); }
+.share-left, .legend-left { background: var(--stats-amber); }
+.share-trial, .legend-trial { background: var(--stats-blue); }
+.share-legend { display: flex; flex-wrap: wrap; gap: 9px 19px; margin: 18px 0 0 80px; color: #486675; font-size: 11px; }
+.share-legend span { display: inline-flex; align-items: center; gap: 6px; }
+.share-legend i { display: inline-block; width: 9px; height: 9px; border-radius: 50%; }
+@media (max-width: 760px) { .stats-kpi-grid { grid-template-columns: repeat(2,minmax(0,1fr)); } .funnel-insight { grid-template-columns: auto 1fr; } .funnel-insight button { grid-column: 1 / -1; justify-self: start; } }
+@media (max-width: 640px) { .stats-section { margin-top: 32px; } .stats-section-head { align-items: start; flex-direction: column; gap: 7px; } .stats-date { white-space: normal; } .stats-card { padding: 20px; } .stats-card-head { align-items: start; flex-direction: column; gap: 4px; } .candidates-panel { padding: 20px; } .candidate-list { grid-template-columns: 1fr; } .share-row { grid-template-columns: 48px minmax(0,1fr); gap: 9px; } .share-legend { margin-left: 0; } .share-segment { font-size: 10px; } }
+@media print { .stats-kpi, .stats-card { box-shadow: none; break-inside: avoid; } .stats-table, .funnel-table { min-width: 0; } .stats-kpi-grid { gap: 5px; } .stats-kpi { min-height: 100px; padding: 12px; } .share-segment { color: #17384d; } }
+.dashboard-intro { max-width: 1000px; color: #5c6b77; font-size: 14px; line-height: 1.6; }
+.research-nav { display: flex; flex-wrap: wrap; gap: 8px 22px; margin-top: 19px; }
+.research-nav a { color: #315977; font-size: 12px; font-weight: 600; }
+.market-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; }
+.market-layout h3 { margin: 0; font-size: 20px; }
+.market-pay { margin: 12px 0 0; color: #315977; font-size: clamp(30px,4vw,42px); font-weight: 400; letter-spacing: -.04em; }
+.market-pay span { font-size: 24px; }
+.text-action { display: inline-block; margin-top: 15px; font-size: 12px; font-weight: 600; }
+.cohort-summary { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px; }
+.cohort-summary h3 { margin: 0; color: #315977; font-size: 23px; font-weight: 600; }
+.cohort-summary .table-count { margin-top: 16px; font-size: 12px; }
+.attrition-kpis { margin-top: 18px; }
+.decision-inputs { display: grid; grid-template-columns: 1fr 1fr; gap: 22px; max-width: 800px; }
+.decision-results { display: grid; grid-template-columns: repeat(3,1fr); gap: 20px; margin: 8px 0 18px; }
+.decision-results > div { padding: 20px 0; border-top: 1px solid #e0e5e8; }
+.decision-results span { display: block; min-height: 34px; color: #61727d; font-size: 12px; }
+.decision-results strong { display: block; margin-top: 12px; color: #315977; font-size: clamp(22px,2.5vw,31px); font-weight: 400; }
+.stats-section { scroll-margin-top: 20px; }
+@media (max-width: 760px) { .market-layout,.cohort-summary,.decision-inputs { grid-template-columns: 1fr; gap: 20px; } .decision-results { grid-template-columns: 1fr; gap: 0; } .decision-results span { min-height: 0; } }
+.research-main .page-head { margin-bottom: 20px; }
+.research-main h1 { max-width: 1000px; }
+.research-contents { margin: 0 0 28px; padding: 14px 0; border-top: 1px solid #e1e7ea; border-bottom: 1px solid #e1e7ea; }
+.research-block { margin: 22px 0; padding: 28px; scroll-margin-top: 20px; }
+.research-block > h2 { margin: 0 0 20px; color: #19232e; font-size: 25px; line-height: 1.25; letter-spacing: -.025em; }
+.research-block > h3 { margin: 28px 0 12px; color: #344c5c; font-size: 18px; line-height: 1.35; }
+.research-paragraph { max-width: 1100px; margin: 14px 0; color: #536571; font-size: 14px; line-height: 1.7; }
+.research-paragraph strong { color: #315977; font-weight: 650; }
+.research-takeaway { margin: 20px 0 0; padding: 13px 16px; border-left: 3px solid #91adbf; background: #f6f9fb; color: #3f5a6b; font-size: 13px; line-height: 1.6; }
+.research-caption { margin: 10px 0; color: #7a8790; font-size: 12px; }
+.research-table { min-width: 640px; font-size: 13px; }
+.research-table th, .research-table td { padding: 13px 15px; text-align: left; vertical-align: top; line-height: 1.5; }
+.research-table th { background: #f7f9fa; color: #667985; font-size: 12px; }
+.research-table td { color: #455d6b; }
+.research-table td strong { color: #315977; font-weight: 650; }
+.research-block .table-scroll { margin: 16px 0; }
+.research-block .funnel-table td { text-align: left; }
+.planned-action { margin: 17px 0; }
+.planned-action .table-count { font-size: 13px; }
+.research-block .panel.stats-card { box-shadow: none; border-color: #dbe5e9; margin-bottom: 22px; }
+.research-block code { font-size: 12px; }
+@media (max-width: 640px) { .research-block { padding: 20px; } .research-block > h2 { font-size: 22px; } .research-contents { gap: 12px 18px; } }
+@media print { .research-block { break-inside: auto; border: 0; padding: 10px 0; } .research-contents { display: none; } .research-table { min-width: 0; } .research-block > h2, .research-block > h3 { break-after: avoid; } }
+</style><script type="module">const DEFAULTS = {
+  currentNet: 100000,
+  raiseNet: 0,
+  replacementNet: 120000,
+  premiumQuarterMax: 60000,
+  premiumRealization: 50,
+  staffFactor: 1,
+  marginMonth: null,
+  vacancyMonths: 2,
+  firstEffectMonth: 5,
+  fullEffectMonth: 11,
+  hrdGross: 135000,
+  cdGross: 340000,
+  odGross: 340000,
+  consultingMonthly: 120000,
+  cvPerHire: 26.3,
+  hrPerHire: 23.3,
+  finalPerHire: 3,
+  hrScreenHours: 0.25,
+  consultingHrHours: 0.5,
+  cdInterviewHours: 1,
+  odInterviewHours: 1,
+  consultingInterviewHours: 1,
+  hrAdminHours: 4,
+  directSearch: 51692,
+  onboardingMonths: 3,
+  hrdOnboardingHours: 1,
+  cdOnboardingHours: 4,
+  odOnboardingHours: 2,
+  consultingOnboardingHours: 1,
+  trainingMaterials: 11264,
+  equipment: 0,
+  handover: 0,
+};
+
+const n = (value, fallback = 0) => {
+  const number = Number(value);
+  return Number.isFinite(number) ? number : fallback;
+};
+const safe = (value) => Math.max(0, n(value));
+const grossThreshold = 40639.5;
+const netShare = 0.87;
+const baseContributionRate = 0.302;
+const excessContributionRate = 0.152;
+
+function companyCostFromNet(net) {
+  const gross = safe(net) / netShare;
+  const contributions = Math.min(gross, grossThreshold) * baseContributionRate
+    + Math.max(0, gross - grossThreshold) * excessContributionRate;
+  return gross + contributions;
+}
+
+function netFromCompanyCost(cost) {
+  const fullCost = safe(cost);
+  const thresholdCost = grossThreshold * (1 + baseContributionRate);
+  const gross = fullCost <= thresholdCost
+    ? fullCost / (1 + baseContributionRate)
+    : (fullCost - grossThreshold * (baseContributionRate - excessContributionRate))
+      / (1 + excessContributionRate);
+  return gross * netShare;
+}
+
+function productivity(monthOfEmployment, firstMonth, fullMonth) {
+  if (monthOfEmployment < firstMonth) return 0;
+  if (fullMonth <= firstMonth) return 1;
+  return Math.min(1, (monthOfEmployment - firstMonth + 1) / (fullMonth - firstMonth + 1));
+}
+
+function calculate(raw = {}) {
+  const v = { ...DEFAULTS, ...raw };
+  const hasMargin = v.marginMonth !== null && v.marginMonth !== "" && Number.isFinite(Number(v.marginMonth));
+  const margin = hasMargin ? safe(v.marginMonth) : null;
+  const staffFactor = Math.max(0, n(v.staffFactor, 1));
+  const workHoursMonth = 21 * 8;
+  const hrdRate = safe(v.hrdGross) / workHoursMonth * staffFactor;
+  const cdRate = safe(v.cdGross) / workHoursMonth * staffFactor;
+  const odRate = safe(v.odGross) / workHoursMonth * staffFactor;
+  const consultingRate = safe(v.consultingMonthly) / workHoursMonth * staffFactor;
+
+  const hrdSearchHours = safe(v.cvPerHire) * safe(v.hrScreenHours)
+    + safe(v.hrAdminHours);
+  const cdSearchHours = safe(v.finalPerHire) * safe(v.cdInterviewHours);
+  const odSearchHours = safe(v.finalPerHire) * safe(v.odInterviewHours);
+  const consultingSearchHours = safe(v.hrPerHire) * safe(v.consultingHrHours)
+    + safe(v.finalPerHire) * safe(v.consultingInterviewHours);
+  const searchLabor = hrdSearchHours * hrdRate + cdSearchHours * cdRate
+    + odSearchHours * odRate + consultingSearchHours * consultingRate;
+  const searchCost = searchLabor + safe(v.directSearch);
+
+  const onboardingMonthly = safe(v.hrdOnboardingHours) * hrdRate
+    + safe(v.cdOnboardingHours) * cdRate
+    + safe(v.odOnboardingHours) * odRate
+    + safe(v.consultingOnboardingHours) * consultingRate;
+  const onboardingMonths = Math.min(12, safe(v.onboardingMonths));
+  const fullOnboarding = onboardingMonthly * onboardingMonths;
+  const oneOffHire = searchCost + safe(v.trainingMaterials) + safe(v.equipment);
+
+  const incumbentBonusMonth = safe(v.premiumQuarterMax) * Math.min(1, safe(v.premiumRealization) / 100) / 3;
+  const replacementBonusMonth = incumbentBonusMonth;
+  const retainedWageMonth = companyCostFromNet(safe(v.currentNet) + safe(v.raiseNet) + incumbentBonusMonth);
+  const newWageMonth = companyCostFromNet(safe(v.replacementNet) + replacementBonusMonth);
+  const vacancy = Math.min(12, safe(v.vacancyMonths));
+  const firstEffect = Math.max(1, Math.min(12, Math.round(n(v.firstEffectMonth, DEFAULTS.firstEffectMonth))));
+  const fullEffect = Math.max(firstEffect, Math.min(12, Math.round(n(v.fullEffectMonth, DEFAULTS.fullEffectMonth))));
+  const rows = [];
+  let retainedWages = 0;
+  let replacementWages = 0;
+  let replacementSupport = 0;
+  let productivitySum = 0;
+  let employmentSum = 0;
+  for (let month = 1; month <= 12; month++) {
+    const elapsedAfterVacancy = month - vacancy;
+    const workFraction = Math.max(0, Math.min(1, elapsedAfterVacancy));
+    const employmentMonth = workFraction > 0 ? Math.ceil(elapsedAfterVacancy) : 0;
+    const productivityShare = workFraction > 0
+      ? workFraction * productivity(employmentMonth, firstEffect, fullEffect)
+      : 0;
+    const retainedPay = retainedWageMonth;
+    const newPay = workFraction * newWageMonth;
+    const support = employmentMonth > 0 && employmentMonth <= onboardingMonths
+      ? workFraction * onboardingMonthly : 0;
+    retainedWages += retainedPay;
+    replacementWages += newPay;
+    replacementSupport += support;
+    productivitySum += productivityShare;
+    employmentSum += workFraction;
+    rows.push({
+      month,
+      workFraction,
+      employmentMonth,
+      productivityShare,
+      retainedPay,
+      newPay,
+      support,
+      retainedContribution: margin === null ? null : margin,
+      newContribution: margin === null ? null : margin * productivityShare,
+    });
+  }
+  const replacementCashCost = replacementWages + replacementSupport + oneOffHire + safe(v.handover);
+  const costOfHire = replacementWages + replacementSupport + oneOffHire;
+  const lostContribution = margin === null ? null : margin * (12 - productivitySum);
+  const vacancyLoss = margin === null ? null : margin * (12 - employmentSum);
+  const rampLoss = margin === null ? null : lostContribution - vacancyLoss;
+  const replacementLoss = lostContribution === null ? null
+    : costOfHire + safe(v.handover) + lostContribution;
+  const retainedNet = margin === null ? null : 12 * margin - retainedWages;
+  const replacementNet = margin === null ? null : margin * productivitySum - replacementCashCost;
+  const advantageRetain = margin === null ? null : retainedNet - replacementNet;
+  const breakEvenRaiseNet = margin === null ? null
+    : netFromCompanyCost((lostContribution + replacementCashCost) / 12)
+      - safe(v.currentNet) - incumbentBonusMonth;
+  return {
+    values: v,
+    hasMargin,
+    margin,
+    rates: { hrdRate, cdRate, odRate, consultingRate },
+    searchHours: { hrdSearchHours, cdSearchHours, odSearchHours, consultingSearchHours },
+    searchLabor,
+    searchCost,
+    onboardingMonthly,
+    fullOnboarding,
+    oneOffHire,
+    costOfHire,
+    incumbentBonusMonth,
+    replacementBonusMonth,
+    retainedWageMonth,
+    newWageMonth,
+    retainedWages,
+    replacementWages,
+    replacementSupport,
+    replacementCashCost,
+    productivitySum,
+    employmentSum,
+    lostContribution,
+    vacancyLoss,
+    rampLoss,
+    replacementLoss,
+    retainedNet,
+    replacementNet,
+    advantageRetain,
+    breakEvenRaiseNet,
+    rows,
+  };
+}
+
+const stages = {
+  1: "Резюме",
+  2: "Контакт с HR",
+  3: "Встреча с руководителем",
+  4: "Оффер",
+  5: "Оффер принят",
+  6: "Трудоустроены",
+  offerRefused: "Отказ от оффера",
+};
+
+const triggers = [...document.querySelectorAll(".stage-trigger")];
+const panel = document.getElementById("candidate-panel");
+const title = document.getElementById("candidate-panel-title");
+const count = document.getElementById("candidate-count");
+const search = document.getElementById("candidate-search");
+const list = document.getElementById("candidate-list");
+const closeButton = document.getElementById("close-candidates");
+let recordsPromise;
+let selectedStage = null;
+let stageRecords = [];
+
+function setExpanded(stage) {
+  for (const trigger of triggers) {
+    const active = stage !== null && trigger.dataset.stage === stage;
+    trigger.setAttribute("aria-expanded", String(active));
+    trigger.classList.toggle("is-selected", active);
+    trigger.closest("li")?.classList.toggle("is-selected", active);
+  }
+}
+
+function closePanel() {
+  selectedStage = null;
+  panel.hidden = true;
+  search.value = "";
+  setExpanded(null);
+}
+
+function renderList() {
+  const query = search.value.trim().toLocaleLowerCase("ru");
+  const matches = stageRecords.filter((record) =>
+    `${record.name} ${record.position}`.toLocaleLowerCase("ru").includes(query)
+  );
+  count.textContent = `Показано ${matches.length} из ${stageRecords.length} записей`;
+  const nodes = matches.map((record) => {
+    const item = document.createElement("li");
+    const name = document.createElement("strong");
+    const position = document.createElement("small");
+    name.textContent = record.name;
+    position.textContent = record.position;
+    item.append(name, position);
+    return item;
+  });
+  if (!nodes.length) {
+    const item = document.createElement("li");
+    item.className = "candidate-empty";
+    item.textContent = "По этому запросу кандидаты не найдены.";
+    nodes.push(item);
+  }
+  list.replaceChildren(...nodes);
+}
+
+async function loadRecords() { return ({
+  "asOf": "2026-11-11",
+  "period": "2026-01-01/2026-11-11",
+  "records": [
+    {
+      "name": "Лёвина Инна Владимировна",
+      "position": "Руководитель проектов 4",
+      "level": 3
+    },
+    {
+      "name": "Маругина Анна Николаевна",
+      "position": "Руководитель проектов 4",
+      "level": 2
+    },
+    {
+      "name": "Омельченко Инга",
+      "position": "РП 5",
+      "level": 3
+    },
+    {
+      "name": "Маругин Андрей",
+      "position": "РП 5",
+      "level": 6
+    },
+    {
+      "name": "Сорокин Данил",
+      "position": "РП 5",
+      "level": 1
+    },
+    {
+      "name": "Колесник Сергей",
+      "position": "РП 5",
+      "level": 1
+    },
+    {
+      "name": "Вероника Лыкова",
+      "position": "РП 5",
+      "level": 3
+    },
+    {
+      "name": "Кулатова Юля",
+      "position": "РП 5",
+      "level": 2
+    },
+    {
+      "name": "Бец Ольга",
+      "position": "Руководитель проекта 6",
+      "level": 2
+    },
+    {
+      "name": "Филимонов Владимир",
+      "position": "Руководитель проекта 6",
+      "level": 3
+    },
+    {
+      "name": "Анастасия Юшева",
+      "position": "Руководитель проекта 6",
+      "level": 2
+    },
+    {
+      "name": "Александр Млай",
+      "position": "Руководитель проекта 6",
+      "level": 2
+    },
+    {
+      "name": "Мисина Елена",
+      "position": "Руководитель проекта 6",
+      "level": 2
+    },
+    {
+      "name": "Анна Федосеева",
+      "position": "Руководитель проекта 6",
+      "level": 3
+    },
+    {
+      "name": "Ефремова Елена",
+      "position": "Руководитель проекта 6",
+      "level": 2
+    },
+    {
+      "name": "Александр Дроздюк",
+      "position": "Руководитель проекта 6",
+      "level": 3
+    },
+    {
+      "name": "Минаков Александр",
+      "position": "Тим-лид Руководитель проекта",
+      "level": 1
+    },
+    {
+      "name": "Швец Иван",
+      "position": "Тим-лид Руководитель проекта",
+      "level": 2
+    },
+    {
+      "name": "Орехова Инна",
+      "position": "Тим-лид Руководитель проекта",
+      "level": 1
+    },
+    {
+      "name": "Лушников Антон",
+      "position": "Тим-лид Руководитель проекта",
+      "level": 1
+    },
+    {
+      "name": "Бамбурова Наталья",
+      "position": "Тим-лид Руководитель проекта",
+      "level": 2
+    },
+    {
+      "name": "Луферова Ксения",
+      "position": "Тим-лид Руководитель проекта",
+      "level": 2
+    },
+    {
+      "name": "Видякина Кира",
+      "position": "Тим-лид Руководитель проекта",
+      "level": 1
+    },
+    {
+      "name": "Коробейникова Ольга",
+      "position": "Тим-лид Руководитель проекта",
+      "level": 2
+    },
+    {
+      "name": "Воронов Антон",
+      "position": "Тим-лид Руководитель проекта",
+      "level": 1
+    },
+    {
+      "name": "Нориков Андрей",
+      "position": "Тим-лид Руководитель проекта",
+      "level": 6
+    },
+    {
+      "name": "Сашников Никита",
+      "position": "Тим-лид Руководитель проекта",
+      "level": 2
+    },
+    {
+      "name": "Старков Денис",
+      "position": "Руководитель проекта 6",
+      "level": 2
+    },
+    {
+      "name": "Семерикова Юлия",
+      "position": "Руководитель проекта 6",
+      "level": 2
+    },
+    {
+      "name": "Жидкова Анна",
+      "position": "Руководитель проекта 6",
+      "level": 2
+    },
+    {
+      "name": "Бороденко Дмитрий",
+      "position": "Руководитель проекта 6",
+      "level": 2
+    },
+    {
+      "name": "Лукин Николай",
+      "position": "Руководитель проекта 6",
+      "level": 2
+    },
+    {
+      "name": "Степанова Виктория",
+      "position": "Руководитель проекта 6",
+      "level": 2
+    },
+    {
+      "name": "Дементьева Ольга",
+      "position": "Руководитель проекта 6",
+      "level": 2
+    },
+    {
+      "name": "Естоева Алина",
+      "position": "Руководитель проекта 6",
+      "level": 2
+    },
+    {
+      "name": "И Сергей",
+      "position": "Руководитель проекта 6",
+      "level": 2
+    },
+    {
+      "name": "Воропаев Максим",
+      "position": "Тим-лид Руководитель проекта",
+      "level": 2
+    },
+    {
+      "name": "Батальянц Александр",
+      "position": "Тим-лид Руководитель проекта",
+      "level": 2
+    },
+    {
+      "name": "Мако Ольга",
+      "position": "Тим-лид Руководитель проекта",
+      "level": 2
+    },
+    {
+      "name": "Яковлева Елена",
+      "position": "Тим-лид Руководитель проекта",
+      "level": 2
+    },
+    {
+      "name": "Мятечкина Кристина",
+      "position": "Тим-лид Руководитель проекта",
+      "level": 2
+    },
+    {
+      "name": "Прошина Анна",
+      "position": "Тим-лид Руководитель проекта",
+      "level": 2
+    },
+    {
+      "name": "Кулатова Юлия",
+      "position": "Руководитель проекта 6",
+      "level": 2
+    },
+    {
+      "name": "Локутова Мария",
+      "position": "Руководитель проекта 6",
+      "level": 2
+    },
+    {
+      "name": "Мельник Александра",
+      "position": "Руководитель проекта 6",
+      "level": 2
+    },
+    {
+      "name": "Шлибурите Ольга",
+      "position": "Руководитель проекта 6",
+      "level": 2
+    },
+    {
+      "name": "Романова Анастасия",
+      "position": "Руководитель проекта 6",
+      "level": 2
+    },
+    {
+      "name": "Высокова Алена",
+      "position": "Тим-лид Руководитель проекта",
+      "level": 2
+    },
+    {
+      "name": "Власова Елена",
+      "position": "Тим-лид Руководитель проекта",
+      "level": 2
+    },
+    {
+      "name": "Рычаловский Павел",
+      "position": "Тим-лид Руководитель проекта",
+      "level": 2
+    },
+    {
+      "name": "Скоморохов Олег",
+      "position": "Тим-лид Руководитель проекта",
+      "level": 2
+    },
+    {
+      "name": "Максимова Анастасия",
+      "position": "Руководитель проекта 6",
+      "level": 2
+    },
+    {
+      "name": "Сашников Никита",
+      "position": "Руководитель проекта 6",
+      "level": 2
+    },
+    {
+      "name": "Горелова Анна",
+      "position": "Руководитель проекта 6",
+      "level": 2
+    },
+    {
+      "name": "Лунина Татьяна",
+      "position": "Руководитель проекта 6",
+      "level": 2
+    },
+    {
+      "name": "Воронов Антон",
+      "position": "Руководитель проекта 6",
+      "level": 2
+    },
+    {
+      "name": "Сухотский Максим",
+      "position": "Руководитель проекта 6",
+      "level": 2
+    },
+    {
+      "name": "Осипова Дарья",
+      "position": "Руководитель проекта 6",
+      "level": 2
+    },
+    {
+      "name": "Панченко Анастасия",
+      "position": "Руководитель проекта 6",
+      "level": 2
+    },
+    {
+      "name": "Думчев Максим",
+      "position": "Руководитель проекта 6",
+      "level": 2
+    },
+    {
+      "name": "Романов Андрей",
+      "position": "Руководитель проекта 6",
+      "level": 2
+    },
+    {
+      "name": "Попов Евгений",
+      "position": "Руководитель проекта 6",
+      "level": 2
+    },
+    {
+      "name": "Кохан Вячеслав",
+      "position": "Руководитель проекта 6",
+      "level": 2
+    },
+    {
+      "name": "Кузнецова Ксения",
+      "position": "Руководитель проекта 6",
+      "level": 2
+    },
+    {
+      "name": "Маликова Виктория",
+      "position": "Руководитель проекта 6",
+      "level": 2
+    },
+    {
+      "name": "Яицкий Денис",
+      "position": "Руководитель проекта 6",
+      "level": 2
+    },
+    {
+      "name": "Титова Дарья",
+      "position": "Руководитель проекта 6",
+      "level": 2
+    },
+    {
+      "name": "Назарова Елена",
+      "position": "Руководитель проекта 6",
+      "level": 2
+    },
+    {
+      "name": "Чепурин Антон",
+      "position": "Тим-лид Руководитель проекта",
+      "level": 2
+    },
+    {
+      "name": "Антропов Максим",
+      "position": "Руководитель проекта 6",
+      "level": 2
+    },
+    {
+      "name": "Савельева Мария",
+      "position": "Руководитель проекта 6",
+      "level": 6
+    },
+    {
+      "name": "Симакова Анна",
+      "position": "Руководитель проекта 6",
+      "level": 3
+    },
+    {
+      "name": "Пайкова Елена",
+      "position": "Руководитель проекта 6",
+      "level": 2
+    },
+    {
+      "name": "Кузнецова Евгения",
+      "position": "Руководитель проекта 6",
+      "level": 2
+    },
+    {
+      "name": "Самойлова Мария",
+      "position": "Руководитель проекта 6",
+      "level": 2
+    },
+    {
+      "name": "Киселева Дия",
+      "position": "Руководитель проекта 6",
+      "level": 2
+    },
+    {
+      "name": "Веденеева Марина",
+      "position": "Руководитель проекта 6",
+      "level": 1
+    },
+    {
+      "name": "Скрипкина Наталья",
+      "position": "Руководитель проекта 6",
+      "level": 2
+    },
+    {
+      "name": "Иванова Кристина",
+      "position": "Руководитель проекта 7",
+      "level": 1
+    },
+    {
+      "name": "Ересов Евгений",
+      "position": "Руководитель проекта 7",
+      "level": 2
+    },
+    {
+      "name": "Макарова Маргарита",
+      "position": "Руководитель проекта 6",
+      "level": 2
+    },
+    {
+      "name": "Романова Ирина",
+      "position": "Руководитель проекта 6",
+      "level": 1
+    },
+    {
+      "name": "Ушаков Иван",
+      "position": "Руководитель проекта 6",
+      "level": 2
+    },
+    {
+      "name": "Ковалева Дана",
+      "position": "Руководитель проекта 7",
+      "level": 2
+    },
+    {
+      "name": "Шалаева Юлия",
+      "position": "Руководитель проекта 7",
+      "level": 1
+    },
+    {
+      "name": "Туркина Полина",
+      "position": "Руководитель проекта 7",
+      "level": 3
+    },
+    {
+      "name": "Гончарук Юлия",
+      "position": "Руководитель проекта 7",
+      "level": 2
+    },
+    {
+      "name": "Лариса Максимова",
+      "position": "Руководитель проекта 7",
+      "level": 3
+    },
+    {
+      "name": "Дашковская Валерия",
+      "position": "Руководитель проекта 7",
+      "level": 1
+    },
+    {
+      "name": "Самсонина Маргарита",
+      "position": "Руководитель проекта 7",
+      "level": 2
+    },
+    {
+      "name": "Коток Виктория",
+      "position": "Руководитель проекта 7",
+      "level": 1
+    },
+    {
+      "name": "Марахтанова Виктория",
+      "position": "Руководитель проекта 7",
+      "level": 2
+    },
+    {
+      "name": "Засим Яна",
+      "position": "Руководитель проекта 7",
+      "level": 3
+    },
+    {
+      "name": "Батыгин Александр",
+      "position": "Руководитель проекта 7",
+      "level": 1
+    },
+    {
+      "name": "Микитенко Юлия",
+      "position": "Руководитель проекта 7",
+      "level": 1
+    },
+    {
+      "name": "Володина Яна",
+      "position": "Руководитель проекта 7",
+      "level": 2
+    },
+    {
+      "name": "Балмасова Оксана",
+      "position": "Руководитель проекта 7",
+      "level": 2
+    },
+    {
+      "name": "Зеленина Алена",
+      "position": "Руководитель проекта 7",
+      "level": 1
+    },
+    {
+      "name": "Ваточкин Геннадий",
+      "position": "Руководитель проекта 7",
+      "level": 3
+    },
+    {
+      "name": "Покровский Илья",
+      "position": "Руководитель проекта 7",
+      "level": 2
+    },
+    {
+      "name": "Ковалевский Виктор",
+      "position": "Руководитель проекта 7",
+      "level": 2
+    },
+    {
+      "name": "Ериго Маргарита",
+      "position": "Руководитель проекта 7",
+      "level": 2
+    },
+    {
+      "name": "Февралева Ольга",
+      "position": "Руководитель проекта 7",
+      "level": 1
+    },
+    {
+      "name": "Вахромеева Людмила",
+      "position": "Руководитель проекта 7",
+      "level": 3
+    },
+    {
+      "name": "Денисов Дмитрий",
+      "position": "Руководитель проекта 7",
+      "level": 1
+    },
+    {
+      "name": "Макарова Мария",
+      "position": "Руководитель проекта 7",
+      "level": 1
+    },
+    {
+      "name": "Кирьянов Денис",
+      "position": "Руководитель проекта 7",
+      "level": 1
+    },
+    {
+      "name": "Филатова Александра",
+      "position": "Руководитель проекта 7",
+      "level": 1
+    },
+    {
+      "name": "Петрова Оксана",
+      "position": "Руководитель проекта 7",
+      "level": 1
+    },
+    {
+      "name": "Карпинская Мария",
+      "position": "Руководитель проекта 7",
+      "level": 1
+    },
+    {
+      "name": "Костыненко Дарья",
+      "position": "Руководитель проекта 7",
+      "level": 1
+    },
+    {
+      "name": "Денисова Светлана",
+      "position": "Руководитель проекта 7",
+      "level": 1
+    },
+    {
+      "name": "Переломова Ирина",
+      "position": "Руководитель проекта 7",
+      "level": 2
+    },
+    {
+      "name": "Андреева Таисия",
+      "position": "Руководитель проекта 7",
+      "level": 2
+    },
+    {
+      "name": "Мазунина Вероника",
+      "position": "Руководитель проекта 7",
+      "level": 2
+    },
+    {
+      "name": "Шидловский Константин",
+      "position": "Руководитель проекта 7",
+      "level": 2
+    },
+    {
+      "name": "Веремеенко Александр",
+      "position": "Руководитель проекта 7",
+      "level": 1
+    },
+    {
+      "name": "Искендеров Рустам",
+      "position": "Руководитель проекта 7",
+      "level": 1
+    },
+    {
+      "name": "Матвеев Алексей",
+      "position": "Руководитель проекта 7",
+      "level": 2
+    },
+    {
+      "name": "Валиулина Ирина",
+      "position": "Руководитель проекта 7",
+      "level": 1
+    },
+    {
+      "name": "Абрамов Александр",
+      "position": "Руководитель проекта 7",
+      "level": 1
+    },
+    {
+      "name": "Вилежанинова Елена",
+      "position": "Руководитель проекта 7",
+      "level": 1
+    },
+    {
+      "name": "Дмитрович Зоя",
+      "position": "Руководитель проекта 7",
+      "level": 1
+    },
+    {
+      "name": "Поттер Александр",
+      "position": "Руководитель проекта 7",
+      "level": 2
+    },
+    {
+      "name": "Суббота Кристина",
+      "position": "Руководитель проекта 7",
+      "level": 2
+    },
+    {
+      "name": "Искра Артем",
+      "position": "Руководитель проекта 7",
+      "level": 2
+    },
+    {
+      "name": "Тютюнов Максим",
+      "position": "Руководитель проекта 7",
+      "level": 2
+    },
+    {
+      "name": "Мансурова Ольга Олеговна",
+      "position": "Руководитель проекта 7",
+      "level": 2
+    },
+    {
+      "name": "Братковская Мария Сергеевна",
+      "position": "Руководитель проекта 7",
+      "level": 2
+    },
+    {
+      "name": "Саватеев Айрат Альбертович",
+      "position": "Руководитель проекта 7",
+      "level": 2
+    },
+    {
+      "name": "Глушенков Евгений Олегович",
+      "position": "Руководитель проекта 7",
+      "level": 2
+    },
+    {
+      "name": "Корниенко Алексей",
+      "position": "Руководитель проекта 7",
+      "level": 2
+    },
+    {
+      "name": "Мясоедова Анна",
+      "position": "Руководитель проекта 7",
+      "level": 2
+    },
+    {
+      "name": "Красников Дмитрий Алексеевич",
+      "position": "Руководитель проекта 7",
+      "level": 2
+    },
+    {
+      "name": "Антипов Артем",
+      "position": "Руководитель проекта 7",
+      "level": 2
+    },
+    {
+      "name": "Гайбадуллин Эйнар",
+      "position": "Руководитель проекта 7",
+      "level": 2
+    },
+    {
+      "name": "Груздев Степан",
+      "position": "Руководитель проекта 7",
+      "level": 2
+    },
+    {
+      "name": "Зубова Светлана",
+      "position": "Руководитель проекта 7",
+      "level": 2
+    },
+    {
+      "name": "Соколова Анастасия",
+      "position": "Руководитель проекта 7",
+      "level": 2
+    },
+    {
+      "name": "Никулин Роман",
+      "position": "Руководитель проекта 7",
+      "level": 2
+    },
+    {
+      "name": "Шарифулин Артур",
+      "position": "Руководитель проекта 7",
+      "level": 2
+    },
+    {
+      "name": "Попова Анна",
+      "position": "Руководитель проекта 7",
+      "level": 2
+    },
+    {
+      "name": "Сорокин Егор",
+      "position": "Руководитель проекта 7",
+      "level": 2
+    },
+    {
+      "name": "Кореневич Ирина",
+      "position": "Руководитель проекта 7",
+      "level": 2
+    },
+    {
+      "name": "Шабетник Иван",
+      "position": "Руководитель проекта 7",
+      "level": 2
+    },
+    {
+      "name": "Сенють Вера",
+      "position": "Руководитель проекта 7",
+      "level": 2
+    },
+    {
+      "name": "Самойлова Марина",
+      "position": "Руководитель проекта 7",
+      "level": 2
+    },
+    {
+      "name": "Семенова Юлия",
+      "position": "Руководитель проекта 7",
+      "level": 2
+    },
+    {
+      "name": "Костромитина Ольга",
+      "position": "Руководитель проекта 7",
+      "level": 2
+    },
+    {
+      "name": "Хвастунова Анастасия",
+      "position": "Руководитель проекта 7",
+      "level": 2
+    },
+    {
+      "name": "Егорова Эльвира",
+      "position": "Руководитель проекта 7",
+      "level": 4,
+      "offerRefused": true
+    },
+    {
+      "name": "Георгиевский Ростислав",
+      "position": "Руководитель проекта 7",
+      "level": 2
+    },
+    {
+      "name": "Павлов Павел",
+      "position": "Руководитель проекта 7",
+      "level": 2
+    },
+    {
+      "name": "Тонкачев Влад",
+      "position": "Руководитель проекта 7",
+      "level": 2
+    },
+    {
+      "name": "Харитонов Марсель",
+      "position": "Руководитель проекта 7",
+      "level": 2
+    },
+    {
+      "name": "Кагирова Джамиля",
+      "position": "Руководитель проекта 7",
+      "level": 2
+    },
+    {
+      "name": "Марфин Виктор",
+      "position": "Руководитель проекта 7",
+      "level": 2
+    },
+    {
+      "name": "Низких Ксения",
+      "position": "Руководитель проекта 7",
+      "level": 2
+    },
+    {
+      "name": "Сандалова Карина",
+      "position": "Руководитель проекта 7",
+      "level": 2
+    },
+    {
+      "name": "Мелуа Александр",
+      "position": "Руководитель проекта 7",
+      "level": 2
+    },
+    {
+      "name": "Троян Иван",
+      "position": "Руководитель проекта 7",
+      "level": 2
+    },
+    {
+      "name": "Загилова Юлия",
+      "position": "Руководитель проекта 7",
+      "level": 2
+    },
+    {
+      "name": "Комарова Маргарита",
+      "position": "Руководитель проекта 7",
+      "level": 2
+    },
+    {
+      "name": "Иришкина Юлия",
+      "position": "Руководитель проекта 7",
+      "level": 2
+    },
+    {
+      "name": "Павлюкова Александра",
+      "position": "Руководитель проекта 7",
+      "level": 2
+    }
+  ]
+}
+).records; }
+
+async function openStage(stage) {
+  if (selectedStage === stage && !panel.hidden) {
+    closePanel();
+    return;
+  }
+  selectedStage = stage;
+  panel.hidden = false;
+  title.textContent = stages[stage];
+  count.textContent = "Загружаю список…";
+  search.value = "";
+  list.replaceChildren();
+  setExpanded(stage);
+  try {
+    const records = await loadRecords();
+    if (selectedStage !== stage) return;
+    stageRecords = records.filter((record) =>
+      stage === "offerRefused" ? record.offerRefused === true : Number(record.level) >= Number(stage)
+    );
+    const expected = Number(triggers.find((trigger) => trigger.dataset.stage === stage)?.dataset.count);
+    if (stageRecords.length !== expected) throw new Error("Количество записей не совпадает с воронкой");
+    renderList();
+    panel.scrollIntoView({ behavior: "smooth", block: "nearest" });
+  } catch {
+    if (selectedStage !== stage) return;
+    count.textContent = "Не удалось загрузить список. Обновите страницу и попробуйте ещё раз.";
+  }
+}
+
+for (const trigger of triggers) {
+  trigger.addEventListener("click", () => openStage(trigger.dataset.stage));
+}
+search.addEventListener("input", renderList);
+closeButton.addEventListener("click", closePanel);
+
+const employeeLabels = {
+  hired: "Принято",
+  plannedReplacement: "Работают · запланирована замена",
+  active: "Работают после ИС",
+  failedTrial: "Не прошли ИС",
+  leftAfterTrial: "Уволены после ИС",
+  onTrial: "Ещё на ИС",
+};
+const statusLabels = {
+  active: "прошёл ИС, работает",
+  failedTrial: "уволен во время ИС",
+  leftAfterTrial: "уволен после ИС в течение 12 месяцев",
+  onTrial: "на ИС",
+};
+const employeeTriggers = [...document.querySelectorAll(".attrition-trigger")];
+const employeePanel = document.getElementById("employee-panel");
+const employeeTitle = document.getElementById("employee-panel-title");
+const employeeCount = document.getElementById("employee-count");
+const employeeSearch = document.getElementById("employee-search");
+const employeeList = document.getElementById("employee-list");
+const closeEmployees = document.getElementById("close-employees");
+let employeeRecordsPromise;
+let selectedEmployeeKey = null;
+let employeeGroup = [];
+
+function setEmployeeExpanded(key) {
+  for (const trigger of employeeTriggers) {
+    const active = key !== null && `${trigger.dataset.category}:${trigger.dataset.year}` === key;
+    trigger.setAttribute("aria-expanded", String(active));
+    trigger.classList.toggle("is-selected", active);
+  }
+}
+
+function closeEmployeePanel() {
+  selectedEmployeeKey = null;
+  employeePanel.hidden = true;
+  employeeSearch.value = "";
+  setEmployeeExpanded(null);
+}
+
+function renderEmployeeList() {
+  const query = employeeSearch.value.trim().toLocaleLowerCase("ru");
+  const matches = employeeGroup.filter((record) => record.name.toLocaleLowerCase("ru").includes(query));
+  employeeCount.textContent = `Показано ${matches.length} из ${employeeGroup.length} сотрудников`;
+  const nodes = matches.map((record) => {
+    const item = document.createElement("li");
+    const name = document.createElement("strong");
+    const status = document.createElement("small");
+    name.textContent = record.name;
+    status.textContent = `Найм ${record.year} · ${record.replacementPlanned ? "работает; увольнение отложено до подбора замены" : statusLabels[record.status]}`;
+    item.append(name, status);
+    return item;
+  });
+  if (!nodes.length) {
+    const item = document.createElement("li");
+    item.className = "candidate-empty";
+    item.textContent = employeeGroup.length ? "По этому запросу РП не найдены." : "В этой категории РП нет.";
+    nodes.push(item);
+  }
+  employeeList.replaceChildren(...nodes);
+}
+
+async function loadEmployees() { return ({
+  "asOf": "2026-11-12",
+  "records": [
+    {
+      "name": "Котова Анастасия",
+      "year": 2025,
+      "status": "failedTrial"
+    },
+    {
+      "name": "Сонина Юлия",
+      "year": 2025,
+      "status": "leftAfterTrial"
+    },
+    {
+      "name": "Тунтуев Антон Андреевич",
+      "year": 2025,
+      "status": "active",
+      "replacementPlanned": true
+    },
+    {
+      "name": "Левина Инна",
+      "year": 2026,
+      "status": "active"
+    },
+    {
+      "name": "Маругин Андрей",
+      "year": 2026,
+      "status": "failedTrial"
+    },
+    {
+      "name": "Нориков Андрей",
+      "year": 2026,
+      "status": "onTrial"
+    },
+    {
+      "name": "Савельева Мария",
+      "year": 2026,
+      "status": "onTrial"
+    },
+    {
+      "name": "Суркова Дарья",
+      "year": 2026,
+      "status": "active"
+    }
+  ]
+}
+).records; }
+
+async function openEmployeeGroup(category, year) {
+  const key = `${category}:${year}`;
+  if (selectedEmployeeKey === key && !employeePanel.hidden) {
+    closeEmployeePanel();
+    return;
+  }
+  selectedEmployeeKey = key;
+  employeePanel.hidden = false;
+  employeeTitle.textContent = `${employeeLabels[category]}${year === "all" ? "" : ` · найм ${year}`}`;
+  employeeCount.textContent = "Загружаю список…";
+  employeeSearch.value = "";
+  employeeList.replaceChildren();
+  setEmployeeExpanded(key);
+  try {
+    const records = await loadEmployees();
+    if (selectedEmployeeKey !== key) return;
+    employeeGroup = records.filter((record) =>
+      (year === "all" || Number(record.year) === Number(year)) &&
+      (category === "hired" || (category === "plannedReplacement" ? record.replacementPlanned === true : record.status === category))
+    );
+    const expected = Number(employeeTriggers.find((trigger) =>
+      trigger.dataset.category === category && trigger.dataset.year === year
+    )?.dataset.count);
+    if (employeeGroup.length !== expected) throw new Error("Количество РП не совпадает с аналитикой");
+    renderEmployeeList();
+    employeePanel.scrollIntoView({ behavior: "smooth", block: "nearest" });
+  } catch {
+    if (selectedEmployeeKey !== key) return;
+    employeeCount.textContent = "Не удалось загрузить список. Обновите страницу и попробуйте ещё раз.";
+  }
+}
+
+for (const trigger of employeeTriggers) {
+  trigger.addEventListener("click", () => openEmployeeGroup(trigger.dataset.category, trigger.dataset.year));
+}
+employeeSearch.addEventListener("input", renderEmployeeList);
+closeEmployees.addEventListener("click", closeEmployeePanel);
+
+
+const decisionRaise = document.getElementById('decision-raise');
+const decisionMargin = document.getElementById('decision-margin');
+const decisionFormat = new Intl.NumberFormat('ru-RU', { maximumFractionDigits: 0 });
+const decisionMoney = value => `${decisionFormat.format(Math.round(value))} ₽`;
+const decisionNumber = input => input.value.trim() === '' ? null : Number(input.value.replace(/\D/g, ''));
+function decisionValues() {
+  return { ...DEFAULTS, currentNet: 100000, raiseNet: decisionNumber(decisionRaise) || 0, marginMonth: decisionNumber(decisionMargin) };
+}
+function renderDecision() {
+  const values = decisionValues();
+  const result = calculate(values);
+  const increase = 12 * (companyCostFromNet(100000 + result.incumbentBonusMonth + values.raiseNet)
+    - companyCostFromNet(100000 + result.incumbentBonusMonth));
+  const gapMonths = 12 - result.productivitySum;
+  const threshold = Math.max(0, (result.retainedWages - result.replacementCashCost) / gapMonths);
+  document.getElementById('raise-cost').textContent = decisionMoney(increase);
+  document.getElementById('margin-threshold').textContent = decisionMoney(threshold);
+  document.getElementById('retain-benefit').textContent = result.hasMargin
+    ? `${result.advantageRetain >= 0 ? '+' : '−'}${decisionMoney(Math.abs(result.advantageRetain))}` : 'Введите маржу';
+  document.getElementById('decision-note').textContent = result.hasMargin
+    ? result.advantageRetain >= 0
+      ? 'При этих условиях сохранение РП даёт больший финансовый результат за 12 месяцев. Положительное значение — преимущество сохранения.'
+      : 'При этих условиях замена дешевле с учётом введённой маржи. Отрицательное значение — преимущество замены.'
+    : 'Сравниваются сценарии «РП остался» и «РП ушёл». Порог показывает, при какой марже под риском сохранение выгоднее. Это расчёт по допущениям, а не фактическая потеря.';
+}
+for (const input of [decisionRaise, decisionMargin]) input.addEventListener('input', () => {
+  const digits = input.value.replace(/\D/g, '');
+  input.value = digits.replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
+  renderDecision();
+});
+document.getElementById('transfer-scenario').addEventListener('click', () => {
+  try { sessionStorage.setItem('rp-decision-transfer', JSON.stringify(decisionValues())); } catch { /* The calculator remains usable without storage. */ }
+});
+renderDecision();
+</script></head><body><header class="topbar"><div class="brand"><strong>К–СКАЙ</strong><span>Рабочие материалы</span></div>
+<nav class="site-nav" aria-label="Разделы сайта"><a href="./index.html" aria-current="page">Аналитика РП</a><a href="./calculator.html">Калькулятор стоимости РП</a></nav>
+<div class="top-actions"><button type="button" class="ghost" onclick="window.print()">Печать / PDF</button></div></header>
+<main class="stats-main research-main"><div class="page-head"><h1>Укомплектование команды руководителей проектов</h1></div>
+<nav class="research-nav research-contents" aria-label="Содержание исследования"><a href="#research-goal">Цель</a><a href="#market-title">Доход и рынок</a><a href="#funnel-title">Подбор и закрепление</a><a href="#cost-title">Затраты</a><a href="#decision-title">Сценарии</a><a href="#discussion-title">Для обсуждения</a></nav>
+<section class="panel research-block" aria-labelledby="research-goal"><h2 id="research-goal">Цель и блоки исследования</h2>
+<p class="research-paragraph">Определить условия оплаты, подбора и удержания руководителей проектов, которые позволят укомплектовать команду и сократить расходы на повторный найм и потери результата проектов.</p>
+<h3>Блоки исследования</h3>
+<div class="table-scroll"><table class="research-table"><thead><tr><th scope="col">Блок</th><th scope="col">Вопрос исследования</th><th scope="col">Что получает бизнес</th></tr></thead><tbody>
+<tr><td>Доход и рынок</td><td>Насколько наше предложение конкурентоспособно для нужного уровня РП?</td><td>Сравнение дохода с Москвой, Петрозаводском и регионами</td></tr>
+<tr><td>Подбор и закрепление</td><td>Сколько наняли и сколько сотрудников закрепилось?</td><td>Результат найма 2025–2026 и потребность в замене</td></tr>
+<tr><td>Стоимость найма и потери</td><td>Во сколько обходятся найм и повторная замена РП?</td><td>Состав затрат и потери результата проектов</td></tr>
+<tr><td>Пересмотр дохода или замена</td><td>При каких условиях сохранение РП выгоднее?</td><td>Финансовое сравнение на 12 месяцев</td></tr>
+</tbody></table></div>
+</section>
+<section class="panel research-block" aria-labelledby="market-title"><h2 id="market-title">1. Доход РП и конкурентоспособность предложения</h2>
+<div class="table-scroll"><table class="research-table"><thead><tr><th scope="col">Сегмент</th><th scope="col">Доход на руки в месяц</th><th scope="col">Медиана выборки / ориентир</th><th scope="col">Основа сравнения</th></tr></thead><tbody>
+<tr><td>К-Скай: оклад + квартальная премия</td><td>100 000–120 000 ₽</td><td>110 000 ₽ — середина диапазона</td><td>Оклад 100 000 ₽ + премия до 60 000 ₽ в квартал</td></tr>
+<tr><td>Москва</td><td>70 000–130 000 ₽</td><td>102 500 ₽</td><td>2 объявления с полной вилкой</td></tr>
+<tr><td>Петрозаводск</td><td>Не установлено</td><td>Не рассчитана</td><td>Сопоставимых предложений с раскрытым доходом не найдено</td></tr>
+<tr><td>Другие регионы РФ</td><td>80 000–150 000 ₽</td><td>112 500 ₽</td><td>2 объявления: Красноярск и Санкт-Петербург</td></tr>
+</tbody></table></div>
+<p class="research-paragraph">Рыночный показатель — медиана середин полных вилок hh в проверенной выборке, опыт 1–3 года. Для К-Скай 110 000 ₽ соответствует выплате половины квартальной премии; фактическая медиана выплат пока не рассчитана. Выборка по два объявления даёт предварительный ориентир, а не медиану всего рынка.</p>
+<details class="advanced market-sample"><summary>Вакансии в расчёте · 4 объявления</summary><div class="details-body"><div class="table-scroll"><table class="research-table"><thead><tr><th>Компания</th><th>Город</th><th>Доход на руки</th><th>Условия</th></tr></thead><tbody><tr><td><a href="https://hh.ru/vacancy/138646798" target="_blank" rel="noopener">Инициум ↗</a></td><td>Москва</td><td>85 000–125 000 ₽</td><td>Разработка и внедрение ПО, заказчики, ТЗ. Офис; оклад + премии по проектам.</td></tr><tr><td><a href="https://hh.ru/vacancy/139202118" target="_blank" rel="noopener">WeJET ↗</a></td><td>Москва</td><td>70 000–130 000 ₽</td><td>Клиентские IT-проекты. Удалённо, самозанятость. В тексте объявление обозначено как перспективная вакансия для изучения предложений, а не подтверждённый срочный найм.</td></tr><tr><td><a href="https://hh.ru/vacancy/139229813" target="_blank" rel="noopener">ОТК Структурная группа ↗</a></td><td>Красноярск</td><td>120 000–150 000 ₽</td><td>Внедрение цифровой платформы, требования и пользователи. Офис / гибрид.</td></tr><tr><td><a href="https://hh.ru/vacancy/139016792" target="_blank" rel="noopener">Орлайм ↗</a></td><td>Санкт-Петербург</td><td>80 000–100 000 ₽</td><td>AI-продукты / B2B SaaS, корпоративные внедрения. Офис / гибрид.</td></tr></tbody></table></div><p class="research-caption">Проверено 12.11.2026. Москва: середины 105 000 и 100 000 ₽ → медиана 102 500 ₽. Регионы: 135 000 и 90 000 ₽ → медиана 112 500 ₽. Объявления только «от» / «до», суммы до налогов и несопоставимые задачи в этот расчёт не включены. Формат работы, договор и премии отличаются; сравнивается опубликованный доход, а не гарантированный оклад.</p></div></details>
+<p class="research-takeaway"><strong>Для бизнеса:</strong> наш диапазон пересекается с проверенными предложениями. По этой выборке нельзя обосновать общее повышение бюджета тезисом «мы ниже рынка». Гарантированная часть у нас — 100 000 ₽; доход 120 000 ₽ достигается только при полной квартальной премии.</p>
+</section>
+<section class="panel research-block" aria-labelledby="funnel-title"><h2 id="funnel-title">2. Подбор и закрепление РП: 2025 и 2026 годы</h2>
+<p class="research-paragraph">Воронка — с 1 января по 11 ноября каждого года. Нажмите число за 2026 год, чтобы увидеть ФИО.</p>
+<div class="table-scroll"><table class="funnel-table"><thead><tr><th scope="col">Этап</th><th scope="col">2025</th><th scope="col">2026 · ФИО</th><th scope="col">Переход этапов · 2026</th></tr></thead><tbody><tr><th scope="row"><span class="stage-number">01</span>Объём кандидатов в воронке</th><td>47</td><td><button type="button" class="stage-trigger table-count" data-stage="1" data-count="165" aria-controls="candidate-panel" aria-expanded="false">165 ↗</button></td><td>—</td></tr><tr><th scope="row"><span class="stage-number">02</span>Контакт с HR</th><td>13</td><td><button type="button" class="stage-trigger table-count" data-stage="2" data-count="134" aria-controls="candidate-panel" aria-expanded="false">134 ↗</button></td><td>81,2%</td></tr><tr><th scope="row"><span class="stage-number">03</span>Встреча с руководителем</th><td>11</td><td><button type="button" class="stage-trigger table-count" data-stage="3" data-count="16" aria-controls="candidate-panel" aria-expanded="false">16 ↗</button></td><td>11,9%</td></tr><tr><th scope="row"><span class="stage-number">04</span>Оффер</th><td>4</td><td><button type="button" class="stage-trigger table-count" data-stage="4" data-count="4" aria-controls="candidate-panel" aria-expanded="false">4 ↗</button></td><td>25,0%</td></tr><tr><th scope="row"><span class="stage-number">05</span>Оффер принят</th><td>3</td><td><button type="button" class="stage-trigger table-count" data-stage="5" data-count="3" aria-controls="candidate-panel" aria-expanded="false">3 ↗</button></td><td>75,0%</td></tr><tr><th scope="row"><span class="stage-number">06</span>Найм</th><td>3</td><td><button type="button" class="stage-trigger table-count" data-stage="6" data-count="3" aria-controls="candidate-panel" aria-expanded="false">3 ↗</button></td><td>100%</td></tr><tr><th scope="row">Отказ от оффера</th><td>1</td><td><button type="button" class="stage-trigger table-count" data-stage="offerRefused" data-count="1" aria-controls="candidate-panel" aria-expanded="false">1 ↗</button></td><td>25,0% от офферов</td></tr><tr><th scope="row">Кандидатов на один найм</th><td>15,7</td><td>55,0</td><td></td></tr></tbody></table></div><section id="candidate-panel" class="panel candidates-panel" aria-labelledby="candidate-panel-title" hidden>
+        <div class="candidates-panel-head">
+          <div><p class="eyebrow">Кандидаты · 1 января — 11 ноября 2026</p><h3 id="candidate-panel-title">Кандидаты этапа</h3><p id="candidate-count" class="candidate-count"></p></div>
+          <button type="button" class="ghost" id="close-candidates">Закрыть</button>
+        </div>
+        <label for="candidate-search" class="candidate-search-label">Поиск по ФИО или должности</label>
+        <input id="candidate-search" class="candidate-search" type="search" autocomplete="off" placeholder="Начните вводить имя">
+        <div class="candidate-list-scroll"><ol id="candidate-list" class="candidate-list"></ol></div>
+        <p class="stats-caption">Список отражает записи воронки, а не уникальных людей: кандидат может участвовать в нескольких вакансиях. Должность показана для различения таких записей.</p>
+      </section>
+<h3>Аналитика увольнений по РП · 2025–2026</h3>
+<p class="research-paragraph">Статусы сотрудников — по году выхода на работу. Воронка выше сгруппирована по первому контакту, поэтому число нанятых в двух таблицах различается.</p>
+<div class="table-scroll"><table class="stats-table attrition-table">
+            <thead><tr><th scope="col">Год найма</th><th scope="col">Принято</th><th scope="col">Работают после ИС</th><th scope="col">Не прошли ИС</th><th scope="col">Уволены после ИС</th><th scope="col">Ещё на ИС</th></tr></thead>
+            <tbody>
+              <tr><th scope="row">2025</th><td><button type="button" class="table-count attrition-trigger" data-category="hired" data-year="2025" data-count="3" aria-controls="employee-panel" aria-expanded="false">3</button></td><td><button type="button" class="table-count attrition-trigger" data-category="active" data-year="2025" data-count="1" aria-controls="employee-panel" aria-expanded="false">1</button></td><td><button type="button" class="table-count attrition-trigger" data-category="failedTrial" data-year="2025" data-count="1" aria-controls="employee-panel" aria-expanded="false">1</button></td><td><button type="button" class="table-count attrition-trigger" data-category="leftAfterTrial" data-year="2025" data-count="1" aria-controls="employee-panel" aria-expanded="false">1</button></td><td><button type="button" class="table-count attrition-trigger" data-category="onTrial" data-year="2025" data-count="0" aria-controls="employee-panel" aria-expanded="false">0</button></td></tr>
+              <tr><th scope="row">2026</th><td><button type="button" class="table-count attrition-trigger" data-category="hired" data-year="2026" data-count="5" aria-controls="employee-panel" aria-expanded="false">5</button></td><td><button type="button" class="table-count attrition-trigger" data-category="active" data-year="2026" data-count="2" aria-controls="employee-panel" aria-expanded="false">2</button></td><td><button type="button" class="table-count attrition-trigger" data-category="failedTrial" data-year="2026" data-count="1" aria-controls="employee-panel" aria-expanded="false">1</button></td><td><button type="button" class="table-count attrition-trigger" data-category="leftAfterTrial" data-year="2026" data-count="0" aria-controls="employee-panel" aria-expanded="false">0</button></td><td><button type="button" class="table-count attrition-trigger" data-category="onTrial" data-year="2026" data-count="2" aria-controls="employee-panel" aria-expanded="false">2</button></td></tr>
+            </tbody>
+            <tfoot><tr><th scope="row">Всего</th><td><button type="button" class="table-count attrition-trigger" data-category="hired" data-year="all" data-count="8" aria-controls="employee-panel" aria-expanded="false">8</button></td><td><button type="button" class="table-count attrition-trigger" data-category="active" data-year="all" data-count="3" aria-controls="employee-panel" aria-expanded="false">3</button></td><td><button type="button" class="table-count attrition-trigger" data-category="failedTrial" data-year="all" data-count="2" aria-controls="employee-panel" aria-expanded="false">2</button></td><td><button type="button" class="table-count attrition-trigger" data-category="leftAfterTrial" data-year="all" data-count="1" aria-controls="employee-panel" aria-expanded="false">1</button></td><td><button type="button" class="table-count attrition-trigger" data-category="onTrial" data-year="all" data-count="2" aria-controls="employee-panel" aria-expanded="false">2</button></td></tr></tfoot>
+          </table></div><div class="planned-action"><button type="button" class="table-count attrition-trigger" data-category="plannedReplacement" data-year="2025" data-count="1" aria-controls="employee-panel" aria-expanded="false">Предстоящая замена: 1 · ФИО ↗</button></div><section id="employee-panel" class="panel candidates-panel" aria-labelledby="employee-panel-title" hidden>
+        <div class="candidates-panel-head">
+          <div><p class="eyebrow">РП · найм 2025–2026</p><h3 id="employee-panel-title">Сотрудники категории</h3><p id="employee-count" class="candidate-count"></p></div>
+          <button type="button" class="ghost" id="close-employees">Закрыть</button>
+        </div>
+        <label for="employee-search" class="candidate-search-label">Поиск по ФИО</label>
+        <input id="employee-search" class="candidate-search" type="search" autocomplete="off" placeholder="Начните вводить имя">
+        <div class="candidate-list-scroll"><ol id="employee-list" class="candidate-list"></ol></div>
+      </section>
+<p class="research-paragraph"><strong>Найм 2025 года требует замены всех трёх РП:</strong> Котова ушла на ИС, Сонина — после ИС, в пределах 12 месяцев. Тунтуев работает; решение об увольнении принято, уход отложен до подбора замены. Два ухода уже состоялись, одна замена предстоит.</p>
+<p class="research-paragraph"><strong>В найме 2026 года:</strong> двое работают после ИС, один ушёл на ИС, двое ещё проходят ИС. Итог их закрепления пока не сформирован.</p>
+<p class="research-takeaway"><strong>Для бизнеса:</strong> четыре оффера и три найма в воронке каждого года не означают, что команда укомплектована. Результат нужно оценивать по прохождению ИС, работе через 12 месяцев и необходимости повторно открывать позицию.</p>
+</section>
+<section class="panel research-block" aria-labelledby="cost-title"><h2 id="cost-title">3. Сколько стоит повторная замена РП</h2>
+<div class="table-scroll"><table class="research-table"><thead><tr><th scope="col">Что оплачивает компания в сценарии замены</th><th scope="col">Сумма</th></tr></thead><tbody>
+<tr><td>Поиск, ввод и обучение одного нового РП</td><td>135 043 ₽</td></tr>
+<tr><td>Зарплата, премия и начисления за 10 месяцев работы</td><td>1 782 339 ₽</td></tr>
+<tr><td>Полная стоимость найма в горизонте 12 месяцев</td><td>1 917 382 ₽</td></tr>
+</tbody></table></div>
+<p class="research-paragraph">Расчёт: новый оклад 120 000 ₽ на руки, выплата половины премиального фонда, два месяца вакансии. Все параметры меняются на второй вкладке. Зарплата оплачивает работу сотрудника; вся сумма найма не равна убытку.</p>
+<p class="research-takeaway"><strong>Для бизнеса:</strong> повторный поиск и ввод добавляют около 135 000 ₽ на один цикл, ещё до учёта задержки результата проектов. За 2025–2026 годы два РП ушли на ИС; фактическая сумма потерь по ним ещё не сведена — не хватает полного ФОТ и оценки полученного результата.</p>
+</section>
+<section class="panel research-block" aria-labelledby="decision-title"><h2 id="decision-title">4. Пересмотр дохода или замена: сценарии на 12 месяцев</h2>
+<p class="research-paragraph"><strong>При окладе 120 000 ₽ сохранение результативного РП выгоднее замены, если под риском более 24 603 ₽ маржи в месяц.</strong> При марже 50 000 ₽ преимущество сохранения — 228 575 ₽ за год. Это пример при условиях модели: два месяца вакансии, первый эффект примерно на пятом месяце работы, полный — на 10–12-м по вашей оценке; базовый расчёт — 11-й месяц. При двух месяцах вакансии полный эффект наступает на 13-м месяце после ухода, за пределами годового горизонта.</p>
+<p class="research-paragraph">Измените повышение и маржу ниже. Расчёт сравнивает два исхода: сотрудник остался либо ушёл. Он не определяет вероятность ухода или влияние повышения на неё.</p>
+<div class="panel stats-card"><div class="decision-inputs"><div class="field"><label for="decision-raise">Повышение оклада на руки, ₽ / месяц</label><input id="decision-raise" type="text" inputmode="numeric" value="20 000"></div><div class="field"><label for="decision-margin">Месячная маржа проектов под риском, ₽</label><input id="decision-margin" type="text" inputmode="numeric" placeholder="Введите для сравнения"></div></div>
+      <div class="decision-results"><div><span>Дополнительные затраты на повышение за год</span><strong id="raise-cost">—</strong></div><div><span>Порог маржи в месяц для выгоды сохранения</span><strong id="margin-threshold">—</strong></div><div><span>Выгода сохранения с учётом введённой маржи</span><strong id="retain-benefit">Введите маржу</strong></div></div>
+      <p class="stats-caption" id="decision-note"></p><details class="advanced"><summary>Условия расчёта и состав затрат</summary><div class="details-body"><p class="stats-caption">Текущий оклад — 100 000 ₽, нового РП — 120 000 ₽ на руки. Премия — 50% квартального фонда 60 000 ₽. Вакансия — 2 месяца; первый результат — примерно на 5-м месяце работы, полный — на 10–12-м по вашей оценке. В базе выбран 11-й месяц. Равномерный рост результата, премия и часы адаптации — допущения.</p><p class="stats-caption">Поиск, ввод и обучение по модели — около 135 тыс. ₽. Полная стоимость найма за год — около 1,917 млн ₽, включая оплату нового РП за 10 месяцев. Это расходы сценария; фактическая потеря зависит также от полученного результата. Полный калькулятор на второй вкладке позволяет изменить исходные условия.</p></div></details><a class="text-action" id="transfer-scenario" href="./calculator.html">Продолжить с этими параметрами в калькуляторе →</a></div>
+    
+</section>
+<section class="panel research-block" aria-labelledby="discussion-title"><h2 id="discussion-title">Что согласовать с бизнесом</h2>
+<div class="table-scroll"><table class="research-table"><thead><tr><th scope="col">Предлагаемое действие</th><th scope="col">Основание</th></tr></thead><tbody>
+<tr><td>Разрешать согласование оклада выше 100 000 ₽ для подходящих кандидатов</td><td>Согласовывать условия под нужный опыт и задачи; общий разрыв с рынком по текущей выборке не установлен</td></tr>
+<tr><td>Оценивать подбор по закреплению, а не только по выходу на работу</td><td>По найму 2025 года два ухода состоялись, ещё одна замена запланирована</td></tr>
+<tr><td>Рассматривать пересмотр дохода результативных действующих РП до начала повторного поиска</td><td>Сопоставить затраты на повышение с затратами и недополученной маржой при замене в калькуляторе</td></tr>
+</tbody></table></div>
+</section>
+</main></body></html>
