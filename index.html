@@ -1618,7 +1618,7 @@ renderDecision();
 <nav class="site-nav" aria-label="Разделы сайта"><a href="./index.html" aria-current="page">Аналитика РП</a><a href="./calculator.html">Калькулятор стоимости РП</a></nav>
 <div class="top-actions"><button type="button" class="ghost" onclick="window.print()">Печать / PDF</button></div></header>
 <main class="stats-main research-main"><div class="page-head"><h1>Укомплектование команды руководителей проектов</h1></div>
-<nav class="research-nav research-contents" aria-label="Содержание исследования"><a href="#research-goal">Цель</a><a href="#market-title">Доход и рынок</a><a href="#funnel-title">Подбор и закрепление</a><a href="#cost-title">Затраты</a><a href="#decision-title">Сценарии</a><a href="#discussion-title">Для обсуждения</a></nav>
+<nav class="research-nav research-contents" aria-label="Содержание исследования"><a href="#research-goal">Цель</a><a href="#market-title">Доход и рынок</a><a href="#funnel-title">Подбор и закрепление</a><a href="#cost-title">Затраты</a><a href="#decision-title">Сценарии</a></nav>
 <section class="panel research-block" aria-labelledby="research-goal"><h2 id="research-goal">Цель и блоки исследования</h2>
 <p class="research-paragraph">Определить условия оплаты, подбора и удержания руководителей проектов, которые позволят укомплектовать команду и сократить расходы на повторный найм и потери результата проектов.</p>
 <h3>Блоки исследования</h3>
@@ -1637,8 +1637,6 @@ renderDecision();
 <tr><td>AstraZeneca</td><td>250 000 ₽</td></tr>
 <tr><td>СберМедИИ</td><td>—</td></tr>
 </tbody></table></div>
-<p class="research-paragraph">Для К-Скай указано текущее предложение, для других компаний — ожидания кандидатов с опытом работы там. Резюме обновлены за месяц к 16 ноября 2026 года. Для сумм из резюме не указано, приведены ли они до налога или на руки. Прочерк означает, что в проверенных резюме суммы не было. <a href="https://hh.ru/search/resume" target="_blank" rel="noopener">Поиск резюме на hh ↗</a>.</p>
-<p class="research-paragraph"><strong>Для бизнеса.</strong> Ближайший ориентир по задачам и географии — <strong>150 000 ₽</strong> у бывшего руководителя проекта внедрения из РТ МИС в Перми. Эту сумму можно проверить в калькуляторе как сценарий найма опытного РП. Наблюдений пока недостаточно для медианы рынка.</p>
 </section>
 <section class="panel research-block" aria-labelledby="funnel-title"><h2 id="funnel-title">2. Подбор и закрепление РП: 2025 и 2026 годы</h2>
 <p class="research-paragraph">Воронка — с 1 января по 11 ноября каждого года. Нажмите число за 2026 год, чтобы увидеть ФИО.</p>
@@ -1672,7 +1670,6 @@ renderDecision();
       </section>
 <p class="research-paragraph"><strong>Найм 2025 года требует замены всех трёх РП:</strong> Котова ушла на ИС, Сонина — после ИС, в пределах 12 месяцев. Тунтуев работает; решение об увольнении принято, уход отложен до подбора замены. Два ухода уже состоялись, одна замена предстоит.</p>
 <p class="research-paragraph"><strong>В найме 2026 года:</strong> двое работают после ИС, один ушёл на ИС, двое ещё проходят ИС. Итог их закрепления пока не сформирован.</p>
-<p class="research-takeaway"><strong>Для бизнеса:</strong> четыре оффера и три найма в воронке каждого года не означают, что команда укомплектована. Результат нужно оценивать по прохождению ИС, работе через 12 месяцев и необходимости повторно открывать позицию.</p>
 </section>
 <section class="panel research-block" aria-labelledby="cost-title"><h2 id="cost-title">3. Сколько стоит повторная замена РП</h2>
 <div class="table-scroll"><table class="research-table"><thead><tr><th scope="col">Что оплачивает компания в сценарии замены</th><th scope="col">Сумма</th></tr></thead><tbody>
@@ -1686,16 +1683,9 @@ renderDecision();
 <section class="panel research-block" aria-labelledby="decision-title"><h2 id="decision-title">4. Пересмотр дохода или замена: сценарии на 12 месяцев</h2>
 <p class="research-paragraph"><strong>При окладе 120 000 ₽ сохранение результативного РП выгоднее замены, если под риском более 24 603 ₽ маржи в месяц.</strong> При марже 50 000 ₽ преимущество сохранения — 228 575 ₽ за год. Это пример при условиях модели: два месяца вакансии, первый эффект примерно на пятом месяце работы, полный — на 10–12-м по вашей оценке; базовый расчёт — 11-й месяц. При двух месяцах вакансии полный эффект наступает на 13-м месяце после ухода, за пределами годового горизонта.</p>
 <p class="research-paragraph">Измените повышение и маржу ниже. Расчёт сравнивает два исхода: сотрудник остался либо ушёл. Он не определяет вероятность ухода или влияние повышения на неё.</p>
-<div class="panel stats-card"><div class="decision-inputs"><div class="field"><label for="decision-raise">Повышение оклада на руки, ₽ / месяц</label><input id="decision-raise" type="text" inputmode="numeric" value="20 000"></div><div class="field"><label for="decision-margin">Месячная маржа проектов под риском, ₽</label><input id="decision-margin" type="text" inputmode="numeric" placeholder="Введите для сравнения"></div></div>
+<div class="panel stats-card"><div class="decision-inputs"><div class="field"><label for="decision-raise">Повышение оклада на руки, ₽ / месяц</label><input id="decision-raise" type="text" inputmode="numeric" value="20 000"></div><div class="field"><label for="decision-margin">Месячная маржа проектов под риском, ₽</label><input id="decision-margin" type="text" inputmode="numeric" placeholder="Введите для сравнения" aria-describedby="decision-margin-help"><small id="decision-margin-help">Введите часть месячной маржи, которую проекты могут недополучить или получить позже, если РП уйдёт. Маржа — выручка по этим проектам за вычетом прямых расходов. Оклад РП здесь не вычитайте: он учтён отдельно. Например, если из 80 000 ₽ месячной маржи под риском 30 000 ₽, введите 30 000 ₽.</small></div></div>
       <div class="decision-results"><div><span>Дополнительные затраты на повышение за год</span><strong id="raise-cost">—</strong></div><div><span>Порог маржи в месяц для выгоды сохранения</span><strong id="margin-threshold">—</strong></div><div><span>Выгода сохранения с учётом введённой маржи</span><strong id="retain-benefit">Введите маржу</strong></div></div>
       <p class="stats-caption" id="decision-note"></p><details class="advanced"><summary>Условия расчёта и состав затрат</summary><div class="details-body"><p class="stats-caption">Текущий оклад — 100 000 ₽, нового РП — 120 000 ₽ на руки. Премия — 50% квартального фонда 60 000 ₽. Вакансия — 2 месяца; первый результат — примерно на 5-м месяце работы, полный — на 10–12-м по вашей оценке. В базе выбран 11-й месяц. Равномерный рост результата, премия и часы адаптации — допущения.</p><p class="stats-caption">Поиск, ввод и обучение по модели — около 135 тыс. ₽. Полная стоимость найма за год — около 1,917 млн ₽, включая оплату нового РП за 10 месяцев. Это расходы сценария; фактическая потеря зависит также от полученного результата. Полный калькулятор на второй вкладке позволяет изменить исходные условия.</p></div></details><a class="text-action" id="transfer-scenario" href="./calculator.html">Продолжить с этими параметрами в калькуляторе →</a></div>
     
-</section>
-<section class="panel research-block" aria-labelledby="discussion-title"><h2 id="discussion-title">Что согласовать с бизнесом</h2>
-<div class="table-scroll"><table class="research-table"><thead><tr><th scope="col">Предлагаемое действие</th><th scope="col">Основание</th></tr></thead><tbody>
-<tr><td>Разрешать согласование оклада выше 100 000 ₽ для подходящих кандидатов</td><td>Согласовывать условия под нужный опыт и задачи. Для кандидатов из медтеха отдельно проверить бюджет по сопоставимым предложениям</td></tr>
-<tr><td>Оценивать подбор по закреплению, а не только по выходу на работу</td><td>По найму 2025 года два ухода состоялись, ещё одна замена запланирована</td></tr>
-<tr><td>Рассматривать пересмотр дохода результативных действующих РП до начала повторного поиска</td><td>Сопоставить затраты на повышение с затратами и недополученной маржой при замене в калькуляторе</td></tr>
-</tbody></table></div>
 </section>
 </main></body></html>
